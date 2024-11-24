@@ -1,0 +1,37 @@
+@SpringBootTest
+class ManeApplicationTests {
+	
+	@Autowired
+	reo obj;
+
+	@Test
+	public void Create() {
+		enti e=new enti();
+		e.setId(1);
+		e.setName("chinu");
+		e.setDesc("kid");
+		obj.save(e);
+		assertNotNull(obj.findById(1).get());
+	}
+	@Test
+	public void List() {
+		List<enti>list=obj.findAll();
+		assertThat(list).size().isGreaterThan(0);
+	}
+	
+	@Test
+	public void update() {
+	enti e=obj.findById(1).get();
+	e.setName("kandha");
+	e.setDesc("kidoo");
+	obj.save(e);
+	assertNotNull("chinu",obj.findById(1).get().getName());
+	assertNotNull("kid",obj.findById(1).get().getDesc());
+	}
+	
+	@Test
+	public void delete() {
+		obj.deleteById(1);
+		assertThat(obj.existsById(1)).isFalse();
+	}
+}
