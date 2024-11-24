@@ -1,0 +1,46 @@
+(contro)
+@RestController
+public class Studentcontroller {
+	
+	@Autowired
+	private Studentrepo obj;
+	
+	
+	@GetMapping("/get")
+	public List<Studententity> getstd(){
+		return obj.findAll();
+	}
+	
+	@GetMapping("/csrf")
+	public CsrfToken getmap(HttpServletRequest rq) {
+		return (CsrfToken) rq.getAttribute("_csrf");
+	}
+	
+	@PostMapping("/post")
+	public String saverecord(Studententity db) {
+		obj.save(db);
+		return "inserted";
+	}
+	
+	@PutMapping("/put/{id}")
+	public String update(@PathVariable int id,Studententity ed) {
+		if(obj.existsById(id)) {
+			var ud=obj.findById(id).get();
+			
+			ud.setName(ed.getName());
+			ud.setAddress(ed.getAddress());
+			obj.save(ud);
+			return "student update successfully";
+			
+		}
+		return "id not found";
+	}
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable int id,Studententity ed) {
+		if(obj.existsById(id)) {
+			obj.deleteById(id);
+			return "deleted";
+			}
+		return "id not found";
+		}
+  }
