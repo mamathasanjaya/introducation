@@ -1,0 +1,66 @@
+(entity)
+@Document(collection="cat")
+public class enti {
+	@Id
+	private int id;
+	
+	private String name;
+	
+	private String desc;
+    (repo)
+ @Repository
+public interface reo extends MongoRepository <enti,Integer>{
+
+}
+    (contro)
+
+@RestController
+public class conr {
+	
+	@Autowired
+	private reo obj;
+	
+	@GetMapping("/gt")
+	public List<enti> getre(){
+		return obj.findAll();
+	}
+	
+	@GetMapping("/get/{id}")
+	public enti get(@PathVariable int id) {
+		return obj.findById(id).orElse(null);
+		
+	}
+	
+	@PostMapping("/ins")
+	public String save(@RequestBody enti e) {
+		obj.save(e);
+		return "inserted";
+	}
+	
+	@PutMapping("/upd/{id}")
+	public String update(@PathVariable int id,@RequestBody enti e) {
+		if(obj.existsById(id)) {
+			enti ud=obj.findById(id).get();
+			ud.setName(e.getName());
+			ud.setDesc(e.getDesc());
+			obj.save(ud);
+			return "updated";
+		}
+		return "id not found";
+	}
+	
+	@DeleteMapping("/rem/{id}")
+	public String remove(@PathVariable int id,@RequestBody enti e) {
+		if(obj.existsById(id)) {
+			obj.deleteById(id);
+			return "removed";
+		}
+		return "id not found";
+	}
+
+}
+      (application propertity)
+      spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=crudoperations
+      
