@@ -1,0 +1,54 @@
+(contro)
+@RestController
+public class pcontro {
+	
+	@Autowired
+	private prepo obj;
+	
+	@GetMapping("/get")
+	public List<pentity> getpt(){
+		return obj.findAll();	
+		}
+	
+	@GetMapping("/gett/{id}")
+	public pentity get(@PathVariable int id) {
+		return obj.findById(id).orElse(null);
+	}
+	
+	@PostMapping("/post")
+	public String save(pentity e) {
+		obj.save(e);
+		return "inserted";
+	}
+	
+	@PutMapping("/put/{id}")
+	public String update(@PathVariable int id,pentity e) {
+		if(obj.existsById(id)) {
+			pentity ud=obj.findById(id).get();
+			ud.setPname(e.getPname());
+			ud.setPrice(e.getPrice());
+			obj.save(ud);
+			return "updated";
+		}
+		return "id not found";
+	}
+	
+	@DeleteMapping("/del/{id}")
+	public String del(@PathVariable int id,pentity e) {
+		if(obj.existsById(id)) {
+			obj.deleteById(id);
+			return "deleted";
+		}
+		return "id not found";
+	}
+
+}
+  (application propertity)
+  spring.datasource.url=jdbc:mysql://localhost:3306/market
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.dll-auto=update
+  (extra propertites)
+  spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+  spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+  
