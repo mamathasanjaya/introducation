@@ -1,0 +1,31 @@
+(while)
+var num:number=5;
+var factorial:number =1;
+
+while(num>=1){
+factorial=factorial*num;
+num--;
+}
+console.log("factorial");
+
+(for)
+for(var i=0;i<=5;i++){
+console.log(i);
+}
+
+(do while)
+var n:number=1;
+do{
+console.log(n);
+n++;
+}while(n<=10);
+
+(nested if)
+var num:number=25{
+if(num>0){
+console.log("positive integer")
+}else if(num<0){
+console.log("negtaive numbers")
+}else{
+console.log(num+"it may posiyive or negative")
+}
