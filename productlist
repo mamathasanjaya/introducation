@@ -1,0 +1,64 @@
+import React, { useState } from 'react'
+
+export default function Product() {
+    const[name,setName]=useState("");
+    const[price,setPrice]=useState("");
+    const[desc,setDesc]=useState("");
+    const[submit,setSubmit]=useState("");
+
+    function handelName(e){
+        setName(e.target.value);
+    }
+    function handelPrice(e){
+        setPrice(e.target.value);
+    }
+    function handelDesc(e){
+        setDesc(e.target.value);
+    }
+    function handelSubmit(e){
+        e.preventDefault();
+        console.log("ProductName:"+name);
+        console.log("ProductPrice:"+price);
+        console.log("ProductDescription:"+desc);
+        
+        
+
+        setSubmit(true);
+        ClearAll();
+    }
+    function ClearAll(){
+        if (submit){}
+        setName("");
+        setPrice("");
+        setDesc("");
+    }
+    function successMessage(){
+        if(submit){
+            return(
+                <div>
+                    <h1>Product added succefully</h1>
+                </div>
+            );
+        }
+    }
+  return (
+    <div>
+      <p>Product Items</p>
+      <form onSubmit={handelSubmit}>
+
+        <label>Product Name: </label>
+        <input type='text' id='name' value={name} onChange={handelName} required/><br></br>
+
+        <label>Product Price:</label>
+        <input type='text' id='price' value={price} onChange={handelPrice} required/><br></br>
+
+        <label>ProductDescription</label>
+        <input type='text' id='Desc' value={desc} onChange={handelDesc} required/><br></br>
+
+        <button type='submit' id='btn'>Add product</button>
+
+      </form>
+      {successMessage()}
+    </div>
+  )
+}
